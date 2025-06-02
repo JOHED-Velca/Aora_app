@@ -3,7 +3,7 @@ import { Image, Text, View } from 'react-native';
 
 import { icons } from '../../constants';
 
-const TabIcon = ({ icon, color, name, focused }) => {
+const TabIcon = ({ icon, color, name, focused }:any) => { //the props type are not strictly defined here, but you can define them as needed
   return (
     <View className='items-center justify-center gap-2 pt-6'>
       <Image
@@ -13,7 +13,7 @@ const TabIcon = ({ icon, color, name, focused }) => {
         className='w-6 h-6'
       />
       <Text 
-        className={`${focused ? 'font-psemibold' : 'font-pregular'} text-[10px]`}
+        className={`${focused ? 'font-psemibold' : 'font-pregular'} text-xs w-full text-center px-1 truncate`} style={{ color: color}}
         numberOfLines={1}
       >
         {name}
@@ -28,13 +28,14 @@ const TabsLayout = () => {
       <Tabs
         screenOptions={{
           tabBarShowLabel: false,
-          // tabBarStyle: {
-          //   height: 70, // Increase height if needed
-          //   paddingHorizontal: 10, // Add horizontal padding
-          // },
-          // tabBarItemStyle: {
-          //   paddingHorizontal: 8, // Add padding between items
-          // }
+          tabBarActiveTintColor: '#FFA001',
+          tabBarInactiveTintColor: '#CDCDE0',
+          tabBarStyle: {
+            backgroundColor: '#161622',
+            borderTopWidth: 1,
+            borderTopColor: '#232533',
+            height: 84,
+          }
         }}
       >
         <Tabs.Screen
@@ -61,7 +62,7 @@ const TabsLayout = () => {
               <TabIcon
                 icon={icons.bookmark}
                 color={color}
-                name="Save"
+                name="Bookmark"
                 focused={focused}
               />
             )
@@ -76,7 +77,7 @@ const TabsLayout = () => {
               <TabIcon
                 icon={icons.plus}
                 color={color}
-                name="New"
+                name="Create"
                 focused={focused}
               />
             )
@@ -91,7 +92,7 @@ const TabsLayout = () => {
               <TabIcon
                 icon={icons.profile}
                 color={color}
-                name="Me"
+                name="Profile"
                 focused={focused}
               />
             )
