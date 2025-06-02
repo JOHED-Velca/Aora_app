@@ -1,12 +1,18 @@
+import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+
+import CustomButton from "@/components/CustomButton";
 import { images } from "../constants";
+
 
 export default function Index() {
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView contentContainerStyle={{ height: '100%'}}>
-        <View className="w-full justify-center items-center h-full px-4">
+         <View className="w-full justify-center items-center h-full px-4"> {/* Modified styles from: min-h-[85px] to h-full */}
           <Image
             source={images.logo}
             resizeMode="contain"
@@ -31,9 +37,19 @@ export default function Index() {
             />
           </View>
 
-          <Text className="text-sm font-pregular text-gray-100 mt-7 text-center">Where creativity meets innovation: embark on a journey of limitless  exploration with Aora</Text>
+          <Text className="text-sm font-pregular text-gray-100 mt-7 text-center">
+            Where creativity meets innovation: embark on a journey of limitless  exploration with Aora
+          </Text>
+
+          <CustomButton
+            title="Continue with Passkey"
+            handlePress={() => router.push("/sign-in")}
+            containerStyles="w-full mt-7"
+          />
         </View>
       </ScrollView>
+
+      <StatusBar backgroundColor="#161622" style="light" />
     </SafeAreaView>
   );
 }
