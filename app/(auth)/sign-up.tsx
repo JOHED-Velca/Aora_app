@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
-import { Image, ScrollView, Text, View } from 'react-native'
+import { Alert, Image, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import FormField from '@/components/FormField'
 import { images } from '@/constants'
 
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
 import CustomButton from '../../components/CustomButton'
+
+import { createUser } from '../../lib/appwrite'
 
 const SingUp = () => {
   const [form, setForm] = useState({
@@ -17,7 +19,27 @@ const SingUp = () => {
   
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const submit = () => {}
+  const submit = async () => {
+    if(!form.username || !form.email || !form.password) {
+      Alert.alert('Error', 'Please fill all fields')
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const result = await createUser( form.email, form.password, form.username); //the order of the parameters matters because appwrite.js expects them in this order
+
+      //set it to global state...
+
+      router.replace('/home');
+    } catch (error:any) {
+      Alert.alert('Error', error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
+
   return (
     <SafeAreaView className='bg-primary h-full'>
       <ScrollView>
@@ -55,7 +77,7 @@ const SingUp = () => {
           />
 
           <CustomButton
-            title="Sign In"
+            title="Sing Up"
             handlePress={submit}
             containerStyles='mt-7'
             isLoading={isSubmitting}
