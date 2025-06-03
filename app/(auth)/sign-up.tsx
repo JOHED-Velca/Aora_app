@@ -10,7 +10,7 @@ import CustomButton from '../../components/CustomButton'
 
 import { createUser } from '../../lib/appwrite'
 
-const SingUp = () => {
+const SignUp = () => {
   const [form, setForm] = useState({
     username: '',
     email: '',
@@ -77,7 +77,7 @@ const SingUp = () => {
           />
 
           <CustomButton
-            title="Sing Up"
+            title="Sign Up"
             handlePress={submit}
             containerStyles='mt-7'
             isLoading={isSubmitting}
@@ -95,4 +95,4 @@ const SingUp = () => {
   )
 }
 
-export default SingUp
+export default SignUp
