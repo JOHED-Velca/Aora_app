@@ -8,16 +8,17 @@ import { images } from '@/constants'
 import { Link, router } from 'expo-router'
 import CustomButton from '../../components/CustomButton'
 
+import { useGlobalContext } from '@/context/GlobalProvider'
 import { createUser } from '../../lib/appwrite'
 
 const SignUp = () => {
+  const { setUser, setIsLoggedIn } = useGlobalContext();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     username: '',
     email: '',
     password: '',
   })
-  
-  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const submit = async () => {
     if(!form.username || !form.email || !form.password) {
@@ -28,7 +29,8 @@ const SignUp = () => {
 
     try {
       const result = await createUser( form.email, form.password, form.username); //the order of the parameters matters because appwrite.js expects them in this order
-
+      setUser(result); // Assuming we have a function to set the user in global state
+      setIsLoggedIn(true);
       //set it to global state...
 
       router.replace('/home');
