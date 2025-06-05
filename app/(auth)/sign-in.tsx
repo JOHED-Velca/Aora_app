@@ -28,9 +28,9 @@ const submit = async () => {
 
   try {
     await signIn( form.email, form.password);
-    const result = await getCurrentUser(); // Fetch the current user after signing in
-    setUser(result); // Assuming we have a function to set the user in global state
-    setIsLoggedIn(true); // Assuming we have a function to set the logged-in state
+    const result = await getCurrentUser(); 
+    setUser(result); 
+    setIsLoggedIn(true); 
     
     //set it to global state...
     Alert.alert('Success', 'You have successfully signed in!');
@@ -81,7 +81,9 @@ const submit = async () => {
             <Text className='text-lg text-gray-100 font-pregular'>
               Don't have an account?
             </Text>
-            <Link href="/sign-up" className='text-lg font-psemibold text-secondary'>Sign Up</Link>
+            <Link href="/sign-up" className='text-lg font-psemibold text-secondary'>
+              <Text>Sign Up</Text>
+            </Link>
           </View>
         </View>
       </ScrollView>

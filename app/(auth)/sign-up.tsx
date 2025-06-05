@@ -29,9 +29,8 @@ const SignUp = () => {
 
     try {
       const result = await createUser( form.email, form.password, form.username); //the order of the parameters matters because appwrite.js expects them in this order
-      setUser(result); // Assuming we have a function to set the user in global state
+      setUser(result);
       setIsLoggedIn(true);
-      //set it to global state...
 
       router.replace('/home');
     } catch (error:any) {
@@ -89,7 +88,9 @@ const SignUp = () => {
             <Text className='text-lg text-gray-100 font-pregular'>
               Have an account already?
             </Text>
-            <Link href="/sign-up" className='text-lg font-psemibold text-secondary'>Sign In</Link>
+            <Link href="/sign-up" className='text-lg font-psemibold text-secondary'>
+              <Text>Sign In</Text>
+            </Link>
           </View>
         </View>
       </ScrollView>
