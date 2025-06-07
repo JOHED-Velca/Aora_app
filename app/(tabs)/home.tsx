@@ -23,12 +23,13 @@ const Home = () => {
   }
   
   return (
-    <SafeAreaView className='bg-primary h-full'>
+     <SafeAreaView className='bg-primary h-full'>  {/*border-2 border-red-500*/}
       <FlatList
-        data={posts}
+        data={posts} //data
         keyExtractor={(item) => item.$id} //prev code:  keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <VideoCard
+          // <Text className='text-3xl text-white'>{item.title}</Text>
+          <VideoCard video={item}
             // title={item.title}
             // thumbnail={item.thumbnail}
             // video={item.video}
@@ -69,7 +70,7 @@ const Home = () => {
         ListEmptyComponent={() => (
           <EmptyState
             title='No Videos Found'
-            subtitle='Looks like we don’t have any videos for this category yet.'
+            subtitle='Be the first to upload a video.'
           />
         )}
         refreshControl={
