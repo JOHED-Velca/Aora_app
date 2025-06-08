@@ -1,9 +1,32 @@
 import { icons } from '@/constants';
-import React, { useState } from 'react';
+import { useVideoPlayer, VideoView } from 'expo-video';
+import React, { useEffect, useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 
 const VideoCard = ({ video: {title, thumbnail, video, creator: {username, avatar}}}: any) => {
     const [play, setPlay] = useState(false);
+    const player = useVideoPlayer(video, (player) => {
+        player.loop = false;
+      });
+    
+      useEffect(() => {
+        if (play) {
+          player.play();
+        }else{
+          player.pause();
+          player.currentTime = 0;
+        }
+      }, [play]);
+    
+      useEffect(() => {
+        const subscription = player.addListener('playToEnd', () => {
+          setPlay(false);
+        })
+    
+        return () => {
+          subscription.remove();
+        };
+      }, []);
   return (
     <View className='flex-col items-center px-4 mb-14'>
         <View className='flex-row gap-3 items-start'>
@@ -36,7 +59,18 @@ const VideoCard = ({ video: {title, thumbnail, video, creator: {username, avatar
         </View>
 
         {play ? (
-            <Text className='text-white'>Playing</Text>
+            <View className='w-60 h-72 overflow-hidden'>
+                <VideoView
+                    player={player}
+                    contentFit='contain'
+                    allowsFullscreen
+                    nativeControls
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                    }}
+                />
+            </View>
         ):(
             <TouchableOpacity
                 className='w-full h-60 rounded-xl mt-3 relative justify-center items-center'

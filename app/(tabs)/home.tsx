@@ -28,14 +28,7 @@ const Home = () => {
         data={posts} //data
         keyExtractor={(item) => item.$id} //prev code:  keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          // <Text className='text-3xl text-white'>{item.title}</Text>
-          <VideoCard video={item}
-            // title={item.title}
-            // thumbnail={item.thumbnail}
-            // video={item.video}
-            // creator={item.creator.username}
-            // avatar={item.creator.avatar}
-          />
+          <VideoCard video={item} />
         )}
         ListHeaderComponent={() => (
           <View className='my-6 px-4 space-y-6'>
