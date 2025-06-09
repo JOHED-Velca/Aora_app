@@ -7,14 +7,21 @@ import InfoBox from '@/components/InfoBox'
 import VideoCard from '@/components/VideoCard'
 import { icons } from '@/constants'
 import { useGlobalContext } from '@/context/GlobalProvider'
-import { getUserPosts } from '@/lib/appwrite'
+import { getUserPosts, signOut } from '@/lib/appwrite'
+import { router } from 'expo-router'
 import useAppwrite from '../../lib/useAppwrite'
 
 const Profile = () => {
   const { user, setUser, setIsLoggedIn } = useGlobalContext();
   const { data: posts } = useAppwrite(() => getUserPosts (user.$id));
 
-  const logout = () => {}
+  const logout = async () => {
+    await signOut();
+    setUser(null);
+    setIsLoggedIn(false);
+
+    router.replace('/sign-in'); // Redirect to login page
+  }
   
   return (
      <SafeAreaView className='bg-primary h-full'>  {/*border-2 border-red-500*/}
