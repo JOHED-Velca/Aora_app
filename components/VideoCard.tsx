@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 
 const VideoCard = ({ video: {title, thumbnail, video, creator: {username, avatar}}}: any) => {
+    // State to manage video playback
     const [play, setPlay] = useState(false);
     const player = useVideoPlayer(video, (player) => {
         player.loop = false;
