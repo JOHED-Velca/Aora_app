@@ -27,27 +27,22 @@ const Create = () => {
       aspect: [4, 3],
       quality: 1,
     });
-    
-    // const result = await DocumentPicker.getDocumentAsync({
-    //   type: selectType === 'image'
-    //     ? ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/HEIC', 'image/HEIF']
-    //     : ['video/mp4', 'video/mov', 'video/gif', 'video/QuickTime'],
-    // })
 
-    if(!result.canceled) {
-      if(selectType == 'image') {
-        setForm({...form, thumbnail: result.assets[0]})
-      }
+    if(!result.canceled && result.assets && result.assets.length > 0) {
+      const selectedAsset = result.assets[0];
+      console.log(`Selected ${selectType}:`, selectedAsset.uri);
 
-      if(selectType == 'video') {
-        setForm({...form, video: result.assets[0]})
+      // Add mime type if it's not present
+    if (!selectedAsset.mimeType) {
+      selectedAsset.mimeType = selectType === 'video' ? 'video/mp4' : 'image/jpeg';
+    }
+      
+      if(selectType === 'image') {
+        setForm({...form, thumbnail: selectedAsset});
+      } else if(selectType === 'video') {
+        setForm({...form, video: selectedAsset});
       }
-    } 
-    // else {
-    //   setTimeout(() => {
-    //     Alert.alert('Document picked', JSON.stringify(result, null, 2))
-    //   }, 100)
-    // }
+    }
   }
 
   const submit = async () =>{
@@ -59,7 +54,7 @@ const Create = () => {
 
     try {
       await createVideo({
-        ...form, userId: user.$id
+        ...form, creatorId: user.$id
       })
 
       Alert.alert('Success', 'Your post has been uploaded successfully!')
@@ -79,29 +74,29 @@ const Create = () => {
   }
 
   // State to manage video playback
-      const [play, setPlay] = useState(false);
-      const player = useVideoPlayer(form.video, (player) => {
-          player.loop = false;
-        });
-      
-        useEffect(() => {
-          if (play) {
-            player.play();
-          }else{
-            player.pause();
-            player.currentTime = 0;
-          }
-        }, [play]);
-      
-        useEffect(() => {
-          const subscription = player.addListener('playToEnd', () => {
-            setPlay(false);
-          })
-      
-          return () => {
-            subscription.remove();
-          };
-        }, []);
+  const [play, setPlay] = useState(false);
+  const player = useVideoPlayer(form.video, (player) => {
+    player.loop = false;
+  });
+  
+  useEffect(() => {
+    if (play) {
+      player.play();
+    }else{
+      player.pause();
+      player.currentTime = 0;
+    }
+  }, [play]);
+
+  useEffect(() => {
+    const subscription = player.addListener('playToEnd', () => {
+      setPlay(false);
+    })
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
   
   return (
     <SafeAreaView className='bg-primary h-full'>
