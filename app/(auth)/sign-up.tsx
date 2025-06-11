@@ -88,7 +88,7 @@ const SignUp = () => {
             <Text className='text-lg text-gray-100 font-pregular'>
               Have an account already?
             </Text>
-            <Link href="/sign-up" className='text-lg font-psemibold text-secondary'>
+            <Link href="/sign-in" className='text-lg font-psemibold text-secondary'>
               <Text>Sign In</Text>
             </Link>
           </View>
